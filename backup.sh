@@ -20,11 +20,11 @@ targetDirectory=$1
 destinationDirectory=$2
 
 # [TASK 2]
-echo "targetDirectory is $1"
-echo "destinationDirectory is $2"
+echo "$targetDirectory is $1"
+echo "$destinationDirectory is $2"
 
 # [TASK 3]
-currentTS='$(date +%s)'
+currentTS=$(date+%s)
 
 # [TASK 4]
 backupFileName="backup-$currentTS.tar.gz"
@@ -37,25 +37,25 @@ backupFileName="backup-$currentTS.tar.gz"
 # To make things easier, we will define some useful variables...
 
 # [TASK 5]
-origAbsPath=`$(pwd)`
+origAbsPath=$(pwd)
 
 # [TASK 6]
-cd $destinationDirectory # <-
-destDirAbsPath=`$(pwd)`
+cd $destinationDirectory
+destAbsPath=$(pwd)
 
 # [TASK 7]
-cd $origAbsPath # <-
-cd $targetDirectory # <-
+cd $origAbsPath
+cd $targetDirectory
 
 # [TASK 8]
-yesterdayTS=$(($currentTS - 24 * 60 *60))
+yesterdayTS=$((currentTS-24*60*60))
 
 declare -a toBackup
 
-for file in $(ls) # [TASK 9]
+for file in $(ls -a) # [TASK 9]
 do
   # [TASK 10]
-  if ((`date -r $file +%s` > $yesterdayTS))
+  if ((`date -r $file +%s`>$yesterdayTS))
   then toBackup+=($file)
     # [TASK 11]
   fi
@@ -63,6 +63,8 @@ done
 
 # [TASK 12]
 tar -czvf $backupFileName ${toBackup[@]}
+
 # [TASK 13]
 mv $backupFileName $destAbsPath
+
 # Congratulations! You completed the final project for this course!
